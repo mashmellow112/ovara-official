@@ -1,0 +1,23 @@
+{
+    "name": "Novara Streaming",
+    "short_name": "Novara",
+    "description": "Uganda's #1 streaming platform for local African movies",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#000000",
+    "theme_color": "#E50914",
+    "icons": [
+        {
+            "src": "images/favicon-gold.svg",
+            "sizes": "192x192",
+            "type": "image/svg+xml",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "images/favicon-gold.svg",
+            "sizes": "512x512",
+            "type": "image/svg+xml",
+            "purpose": "any maskable"
+        }
+    ]
+}

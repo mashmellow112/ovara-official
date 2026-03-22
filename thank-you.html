@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO -->
+    <title>You're In! - Welcome to Novara</title>
+    <meta name="description" content="Welcome to the Novara waitlist! You're one step closer to streaming the best African content.">
+    
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Welcome to Novara - You're In!">
+    <meta property="og:description" content="I just joined the Novara waitlist! Join me and get 50% off early bird pricing.">
+    <meta property="og:image" content="https://novara.ug/images/og-share.jpg">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-gold: #f5c518;
+            --primary-gold-light: #ffd700;
+            --bg-dark: #0a0a0f;
+            --bg-dark-secondary: #12121a;
+            --bg-card: #1a1a2e;
+            --text-white: #ffffff;
+            --text-gray: #a0a0a0;
+            --accent-green: #4ade80;
+            --accent-red: #ef4444;
+            --gradient-gold: linear-gradient(135deg, #f5c518 0%, #ffd700 100%);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-white);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        /* ========================================
+           HERO SECTION
+           ======================================== */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 5%;
+            position: relative;
+            text-align: center;
+        }
+        
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(ellipse at 50% 0%, rgba(245, 197, 24, 0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 100%, rgba(74, 222, 128, 0.05) 0%, transparent 50%),
+                var(--bg-dark);
+            z-index: 0;
+        }
+        
+        /* Confetti */
+        .confetti {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+        
+        .confetti-piece {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            animation: confetti-fall 4s ease-out infinite;
+        }
+        
+        @keyframes confetti-fall {
+            0% {
+                transform: translateY(-100vh) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+        
+        .content {
+            position: relative;
+            z-index: 1;
+            max-width: 700px;
+        }
+        
+        /* Success Animation */
+        .success-icon {
+            font-size: 100px;
+            margin-bottom: 20px;
+            animation: bounce-in 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+        
+        @keyframes bounce-in {
+            0% { transform: scale(0); opacity: 0; }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        
+        h1 {
+            font-size: clamp(36px, 6vw, 56px);
+            font-weight: 900;
+            margin-bottom: 15px;
+            background: var(--gradient-gold);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .subtitle {
+            font-size: 20px;
+            color: var(--text-gray);
+            margin-bottom: 40px;
+            line-height: 1.7;
+        }
+        
+        /* Discount Box */
+        .discount-box {
+            background: var(--bg-card);
+            border: 2px solid var(--primary-gold);
+            border-radius: 20px;
+            padding: 35px;
+            margin-bottom: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .discount-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-gold);
+        }
+        
+        .discount-title {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--accent-green);
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        
+        .discount-percentage {
+            font-size: 56px;
+            font-weight: 900;
+            color: var(--primary-gold);
+            line-height: 1;
+        }
+        
+        .discount-price {
+            font-size: 24px;
+            color: var(--text-gray);
+            margin-top: 10px;
+            text-decoration: line-through;
+        }
+        
+        .discount-note {
+            margin-top: 15px;
+            font-size: 15px;
+            color: var(--text-gray);
+        }
+        
+        /* ========================================
+           REFERRAL PROGRAM
+           ======================================== */
+        .referral-section {
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 35px;
+            margin-bottom: 40px;
+        }
+        
+        .referral-title {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .referral-title i {
+            color: var(--primary-gold);
+        }
+        
+        .referral-desc {
+            color: var(--text-gray);
+            margin-bottom: 25px;
+            font-size: 15px;
+        }
+        
+        .referral-box {
+            background: rgba(245, 197, 24, 0.1);
+            border: 2px dashed var(--primary-gold);
+            border-radius: 12px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .referral-code {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--primary-gold);
+            letter-spacing: 3px;
+        }
+        
+        .copy-btn {
+            padding: 12px 25px;
+            background: var(--primary-gold);
+            color: var(--bg-dark);
+            border: none;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .copy-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(245, 197, 24, 0.4);
+        }
+        
+        .referral-steps {
+            margin-top: 25px;
+            text-align: left;
+        }
+        
+        .referral-steps h4 {
+            font-size: 16px;
+            margin-bottom: 15px;
+            color: var(--text-white);
+        }
+        
+        .step {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .step-number {
+            width: 30px;
+            height: 30px;
+            background: var(--primary-gold);
+            color: var(--bg-dark);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+        
+        .step p {
+            color: var(--text-gray);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        
+        /* ========================================
+           SHARE BUTTONS
+           ======================================== */
+        .share-section {
+            margin-bottom: 40px;
+        }
+        
+        .share-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+        
+        .share-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .share-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 28px;
+            border-radius: 30px;
+            text-decoration: none;
+            color: white;
+            font-weight: 600;
+            font-size: 15px;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .share-btn:hover {
+            transform: translateY(-3px);
+        }
+        
+        .share-facebook { background: #1877f2; }
+        .share-twitter { background: #1da1f2; }
+        .share-whatsapp { background: #25d366; }
+        .share-linkedin { background: #0077b5; }
+        
+        /* ========================================
+           SOCIAL LINKS
+           ======================================== */
+        .social-section {
+            margin-bottom: 40px;
+        }
+        
+        .social-title {
+            font-size: 16px;
+            color: var(--text-gray);
+            margin-bottom: 20px;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+        
+        .social-links a {
+            width: 55px;
+            height: 55px;
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .social-links a:hover {
+            background: var(--primary-gold);
+            color: var(--bg-dark);
+            transform: translateY(-5px);
+        }
+        
+        /* ========================================
+           WHATSAPP SECTION
+           ======================================== */
+        .whatsapp-section {
+            background: rgba(37, 211, 102, 0.1);
+            border: 1px solid rgba(37, 211, 102, 0.3);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .whatsapp-section h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+            color: #25d366;
+        }
+        
+        .whatsapp-section p {
+            color: var(--text-gray);
+            margin-bottom: 20px;
+            font-size: 15px;
+        }
+        
+        .whatsapp-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: #25d366;
+            color: white;
+            padding: 14px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .whatsapp-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 25px rgba(37, 211, 102, 0.5);
+        }
+        
+        /* ========================================
+           NEXT STEPS
+           ======================================== */
+        .next-steps {
+            text-align: left;
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .next-steps h3 {
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: var(--primary-gold);
+        }
+        
+        .next-step-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 18px;
+        }
+        
+        .next-step-item:last-child {
+            margin-bottom: 0;
+        }
+        
+        .next-step-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(245, 197, 24, 0.15);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        
+        .next-step-icon i {
+            color: var(--primary-gold);
+        }
+        
+        .next-step-text h4 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .next-step-text p {
+            color: var(--text-gray);
+            font-size: 14px;
+        }
+        
+        /* ========================================
+           FOOTER
+           ======================================== */
+        .back-link {
+            color: var(--text-gray);
+            text-decoration: none;
+            font-size: 15px;
+            transition: color 0.3s;
+        }
+        
+        .back-link:hover {
+            color: var(--primary-gold);
+        }
+        
+        .footer-note {
+            margin-top: 30px;
+            font-size: 13px;
+            color: var(--text-gray);
+            opacity: 0.6;
+        }
+        
+        /* ========================================
+           FLOATING WHATSAPP
+           ======================================== */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #25D366;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 5px 25px rgba(37, 211, 102, 0.5);
+            z-index: 999;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+        
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+        }
+        
+        .whatsapp-float i {
+            color: white;
+            font-size: 28px;
+        }
+        
+        /* ========================================
+           RESPONSIVE
+           ======================================== */
+        @media (max-width: 768px) {
+            .hero {
+                padding: 60px 4% 40px;
+            }
+            
+            .success-icon {
+                font-size: 80px;
+            }
+            
+            .discount-percentage {
+                font-size: 42px;
+            }
+            
+            .referral-box {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .share-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .share-btn {
+                width: 100%;
+                max-width: 280px;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Confetti -->
+    <div class="confetti">
+        <div class="confetti-piece" style="left: 5%; background: var(--primary-gold); animation-delay: 0s;"></div>
+        <div class="confetti-piece" style="left: 15%; background: #25d366; animation-delay: 0.3s;"></div>
+        <div class="confetti-piece" style="left: 25%; background: var(--primary-gold); animation-delay: 0.6s;"></div>
+        <div class="confetti-piece" style="left: 35%; background: #25d366; animation-delay: 0.9s;"></div>
+        <div class="confetti-piece" style="left: 45%; background: var(--primary-gold); animation-delay: 1.2s;"></div>
+        <div class="confetti-piece" style="left: 55%; background: #25d366; animation-delay: 1.5s;"></div>
+        <div class="confetti-piece" style="left: 65%; background: var(--primary-gold); animation-delay: 1.8s;"></div>
+        <div class="confetti-piece" style="left: 75%; background: #25d366; animation-delay: 2.1s;"></div>
+        <div class="confetti-piece" style="left: 85%; background: var(--primary-gold); animation-delay: 2.4s;"></div>
+        <div class="confetti-piece" style="left: 95%; background: #25d366; animation-delay: 2.7s;"></div>
+    </div>
+
+    <section class="hero">
+        <div class="hero-bg"></div>
+        
+        <div class="content">
+            <div class="success-icon">🎉</div>
+            
+            <h1>Welcome to Novara!</h1>
+            <p class="subtitle">
+                You're officially on the waitlist! We're excited to have you join Uganda's streaming revolution.
+            </p>
+            
+            <!-- Your Discount -->
+            <div class="discount-box">
+                <p class="discount-title">🎊 Your Early Bird Discount</p>
+                <p class="discount-percentage">50% OFF</p>
+                <p class="discount-price">Regular: 10,000 UGX/month → Your price: 5,000 UGX/month</p>
+                <p class="discount-note">This discount is locked in forever when you subscribe!</p>
+            </div>
+            
+            <!-- Referral Program -->
+            <div class="referral-section">
+                <h3 class="referral-title">
+                    <i class="fas fa-gift"></i> Get 1 Month FREE!
+                </h3>
+                <p class="referral-desc">
+                    Invite friends to join the waitlist. For every friend who signs up using your code, you'll get <strong>1 month FREE</strong> when we launch!
+                </p>
+                
+                <div class="referral-box">
+                    <div>
+                        <p style="font-size: 13px; color: var(--text-gray); margin-bottom: 5px;">Your Referral Code</p>
+                        <span class="referral-code" id="referralCode">NOVARA2026</span>
+                    </div>
+                    <button class="copy-btn" onclick="copyReferralCode()">
+                        <i class="fas fa-copy"></i> Copy
+                    </button>
+                </div>
+                
+                <div class="referral-steps">
+                    <h4>How it works:</h4>
+                    <div class="step">
+                        <span class="step-number">1</span>
+                        <p>Share your unique referral code with friends and family</p>
+                    </div>
+                    <div class="step">
+                        <span class="step-number">2</span>
+                        <p>They join the waitlist using your code</p>
+                    </div>
+                    <div class="step">
+                        <span class="step-number">3</span>
+                        <p>When they subscribe at launch, you both get 1 month FREE!</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Share -->
+            <div class="share-section">
+                <p class="share-title">📣 Share with friends & family</p>
+                <div class="share-buttons">
+                    <button class="share-btn share-facebook" onclick="shareOnFacebook()">
+                        <i class="fab fa-facebook-f"></i> Share
+                    </button>
+                    <button class="share-btn share-twitter" onclick="shareOnTwitter()">
+                        <i class="fab fa-twitter"></i> Tweet
+                    </button>
+                    <button class="share-btn share-whatsapp" onclick="shareOnWhatsApp()">
+                        <i class="fab fa-whatsapp"></i> Send
+                    </button>
+                    <button class="share-btn share-linkedin" onclick="shareOnLinkedIn()">
+                        <i class="fab fa-linkedin-in"></i> Post
+                    </button>
+                </div>
+            </div>
+            
+            <!-- WhatsApp Support -->
+            <div class="whatsapp-section">
+                <h3><i class="fab fa-whatsapp"></i> Need Help?</h3>
+                <p>Have questions? Chat with our team directly on WhatsApp!</p>
+                <a href="https://wa.me/256704231134?text=Hi!%20I%20just%20joined%20the%20Novara%20waitlist.%20I%20have%20a%20question..." 
+                   class="whatsapp-btn" 
+                   target="_blank">
+                    <i class="fab fa-whatsapp"></i> Chat on WhatsApp
+                </a>
+            </div>
+            
+            <!-- Next Steps -->
+            <div class="next-steps">
+                <h3>📋 What's Next?</h3>
+                <div class="next-step-item">
+                    <div class="next-step-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div class="next-step-text">
+                        <h4>Check your email</h4>
+                        <p>We've sent a confirmation email with your discount code and next steps.</p>
+                    </div>
+                </div>
+                <div class="next-step-item">
+                    <div class="next-step-icon">
+                        <i class="fas fa-bell"></i>
+                    </div>
+                    <div class="next-step-text">
+                        <h4>Watch for updates</h4>
+                        <p>We'll email you when we're ready to launch and give you early access.</p>
+                    </div>
+                </div>
+                <div class="next-step-item">
+                    <div class="next-step-icon">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <div class="next-step-text">
+                        <h4>Be first to know</h4>
+                        <p>Follow us on social media for exclusive previews and behind-the-scenes content.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Social -->
+            <div class="social-section">
+                <p class="social-title">Follow us for updates</p>
+                <div class="social-links">
+                    <a href="https://facebook.com/novaraug" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://twitter.com/novara_ug" target="_blank"><i class="fab fa-twitter"></i></a>
+                    <a href="https://instagram.com/novara_ug" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="https://youtube.com/@novara_ug" target="_blank"><i class="fab fa-youtube"></i></a>
+                    <a href="https://www.tiktok.com/@join.novara" target="_blank" rel="noopener noreferrer"><i class="fab fa-tiktok"></i></a>
+                </div>
+            </div>
+            
+            <a href="index.html" class="back-link">
+                ← Back to Home
+            </a>
+            
+            <p class="footer-note">
+                © 2026 Novara Streaming. All rights reserved.
+            </p>
+        </div>
+    </section>
+    
+    <!-- Floating WhatsApp -->
+    <a href="https://wa.me/256700123456?text=Hi!%20I'm%20interested%20in%20Novara%20streaming." 
+       class="whatsapp-float" 
+       target="_blank"
+       aria-label="Chat on WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <script>
+        // Generate or get referral code
+        function getReferralCode() {
+            let code = localStorage.getItem('novara_referral_code');
+            if (!code) {
+                code = 'NOV' + Math.random().toString(36).substr(2, 5).toUpperCase();
+                localStorage.setItem('novara_referral_code', code);
+            }
+            return code;
+        }
+        
+        // Display referral code
+        document.getElementById('referralCode').textContent = getReferralCode();
+        
+        // Copy referral code
+        function copyReferralCode() {
+            const code = document.getElementById('referralCode').textContent;
+            navigator.clipboard.writeText(code).then(() => {
+                alert('Referral code copied! Share it with your friends.');
+            });
+        }
+        
+        // Get current URL with referral code
+        const baseUrl = window.location.origin + window.location.pathname;
+        const referralCode = getReferralCode();
+        const shareUrl = `${baseUrl}?ref=${referralCode}`;
+        const shareText = "I just joined the Novara waitlist! 🎬 Uganda's new streaming platform with 50% off early bird pricing. Join me!";
+        
+        function shareOnFacebook() {
+            window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`, '_blank', 'width=600,height=400');
+        }
+        
+        function shareOnTwitter() {
+            window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`, '_blank', 'width=600,height=400');
+        }
+        
+        function shareOnWhatsApp() {
+            window.open(`https://wa.me/?text=${encodeURIComponent(shareText + ' ' + shareUrl)}`, '_blank');
+        }
+        
+        function shareOnLinkedIn() {
+            window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`, '_blank', 'width=600,height=400');
+        }
+        
+        // Log conversion
+        console.log('Thank you page loaded - conversion tracked!');
+    </script>
+</body>
+</html>
