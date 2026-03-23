@@ -2468,8 +2468,8 @@
                 <h4>Contact</h4>
                 <ul>
                     <li><a href="mailto:immyharmiz@gmail.com">hello@novara.ug</a></li>
-                    <li><a href="tel:+256701262789">+256 701 262 789</a></li>
-                    <li><a href="https://wa.me/256704231134">WhatsApp Support</a></li>
+                    <li><a href="tel:+2567012*****">+2567012*****</a></li>
+                    <li><a href="https://whatsapp.com/channel/0029VbDDs19KQuJFokgpk435">WhatsApp Support</a></li>
                 </ul>
             </div>
             <div class="footer-col">
@@ -2491,7 +2491,7 @@
     </footer>
 
     <!-- Floating WhatsApp -->
-    <a href="https://wa.me/256704231134?text=Hi!%20I'm%20interested%20in%20Novara%20streaming." 
+    <a href="https://whatsapp.com/channel/0029VbDDs19KQuJFokgpk435" 
        class="whatsapp-float" 
        target="_blank"
        aria-label="Chat on WhatsApp">
@@ -2851,7 +2851,19 @@
             
             if (!code) return;
             
-            const shareText = `Join me on Novara - Uganda's #1 streaming platform! Use my referral code ${code} to get 1 month free when they launch. Sign up at https://mashmellow112.github.io/ovara-official/`;
+            // Base URL with referral code as query parameter
+            const baseUrl = 'https://mashmellow112.github.io/ovara-official/';
+            const shareUrl = `${baseUrl}?ref=${code}`;
+            
+            const shareText = `🎬 Join me on Novara - Uganda's #1 streaming platform!
+
+✨ Use my referral code: ${code}
+🔗 Sign up: ${shareUrl}
+
+📱 Join our WhatsApp channel for updates:
+https://whatsapp.com/channel/0029VbDDs19KQuJFokgpk435
+
+🎉 Get 1 month FREE when they launch!`;
             
             // Try Web Share API first
             if (navigator.share) {
@@ -2859,7 +2871,7 @@
                     await navigator.share({
                         title: 'Join Novara - Get 1 Month Free!',
                         text: shareText,
-                        url: 'https://mashmellow112.github.io/ovara-official/'
+                        url: shareUrl
                     });
                     return;
                 } catch (e) {
@@ -2889,7 +2901,20 @@
             
             if (!code || !whatsappEl) return;
             
-            const message = `Join me on Novara - Uganda's #1 streaming platform! Use my referral code ${code} to get 1 month free when they launch.`;
+            // Base URL with referral code as query parameter
+            const baseUrl = 'https://mashmellow112.github.io/ovara-official/';
+            const shareUrl = `${baseUrl}?ref=${code}`;
+            
+            const message = `🎬 Join me on Novara - Uganda's #1 streaming platform!
+
+✨ Use my referral code: ${code}
+🔗 Sign up: ${shareUrl}
+
+📱 Join our WhatsApp channel for updates:
+https://whatsapp.com/channel/0029VbDDs19KQuJFokgpk435
+
+🎉 Get 1 month FREE when they launch!`;
+            
             whatsappEl.href = `https://wa.me/?text=${encodeURIComponent(message)}`;
         }
         
@@ -3060,6 +3085,17 @@
         document.addEventListener('DOMContentLoaded', () => {
             // Check for returning user
             checkExistingUser();
+            
+            // Check for referral code in URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const refCode = urlParams.get('ref');
+            if (refCode) {
+                const referralInput = document.getElementById('referralInput');
+                if (referralInput) {
+                    referralInput.value = refCode.toUpperCase();
+                    // Show toast or indicator that referral code was applied
+                }
+            }
             
             // Add ripple effect to submit button
             const submitBtn = document.getElementById('joinWaitlistBtn');
