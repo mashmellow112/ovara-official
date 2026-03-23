@@ -17,6 +17,16 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
+    <!-- Favicon and Icon Assets for SEO -->
+    <!-- SVG favicon (modern, scalable) - Gold color -->
+    <link rel="icon" type="image/svg+xml" href="images/favicon-gold.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-gold.svg">
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-gold.svg">
+    <link rel="apple-touch-icon" sizes="180x180" href="images/favicon-gold.svg">
+    <link rel="icon" type="image/png" sizes="192x192" href="images/favicon-gold.svg">
+    <link rel="icon" type="image/png" sizes="512x512" href="images/favicon-gold.svg">
+    <meta name="msapplication-TileImage" content="images/favicon-gold.svg">
+    
     <style>
         :root {
             --primary-gold: #f5c518;
@@ -105,6 +115,30 @@
             position: relative;
             z-index: 1;
             max-width: 700px;
+        }
+        
+        /* Page Logo */
+        .page-logo {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            margin-bottom: 20px;
+        }
+        
+        .page-logo .logo-img {
+            width: 40px;
+            height: 40px;
+        }
+        
+        .page-logo .logo-text {
+            font-size: 28px;
+            font-weight: 900;
+            background: linear-gradient(135deg, #f5c518 0%, #ffd700 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 2px;
         }
         
         /* Success Animation */
@@ -576,6 +610,12 @@
         <div class="hero-bg"></div>
         
         <div class="content">
+            <!-- Logo -->
+            <a href="index.html" class="page-logo">
+                <img src="images/favicon-gold.svg" alt="Novara Logo" class="logo-img">
+                <span class="logo-text">NOVARA</span>
+            </a>
+            
             <div class="success-icon">🎉</div>
             
             <h1>Welcome to Novara!</h1>

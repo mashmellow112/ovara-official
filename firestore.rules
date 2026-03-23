@@ -1,0 +1,22 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Waitlist collection - public signup access
+    match /waitlist/{entry} {
+      // Allow anyone to submit their email to join the waitlist
+      allow create: if true;
+      
+      // Deny all read access to protect user emails
+      allow read: if false;
+      
+      // Prevent updates and deletes entirely
+      allow update, delete: if false;
+    }
+    
+    // Default deny all - strict security for all other collections
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

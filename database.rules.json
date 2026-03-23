@@ -1,0 +1,32 @@
+{
+  "rules": {
+    ".read": false,
+    ".write": true,
+    "waitlist": {
+      ".read": "auth != null || data.child('myReferralCode').val() != null",
+      ".write": true,
+      ".validate": "newData.hasChildren(['email', 'myReferralCode', 'timestamp'])",
+      "$uid": {
+        ".validate": "newData.hasChildren(['email', 'myReferralCode', 'timestamp'])"
+      },
+      "email": {
+        ".validate": "newData.isString() && newData.val().matches(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$/)"
+      },
+      "myReferralCode": {
+        ".validate": "newData.isString() && newData.val().matches(/^NOV-[A-Z0-9]{5}$/)"
+      },
+      "referredBy": {
+        ".validate": "newData.isString()"
+      },
+      "timestamp": {
+        ".validate": "newData.isNumber()"
+      },
+      "copyCount": {
+        ".validate": "newData.isNumber() || !newData.exists()"
+      },
+      "friendCount": {
+        ".validate": "newData.isNumber() || !newData.exists()"
+      }
+    }
+  }
+}

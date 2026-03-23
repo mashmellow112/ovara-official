@@ -2,6 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <!-- EmailJS for sending notifications -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <!-- SEO Meta Tags -->
@@ -55,9 +57,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <!-- Firebase SDK v9+ Modular (loaded via ES modules in script below) -->
     
     <style>
         /* ========================================
@@ -120,10 +120,7 @@
             50% { transform: scale(1.05); }
         }
         
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
+        /* Float animation removed - was for old decoration */
         
         @keyframes shimmer {
             0% { background-position: -200% 0; }
@@ -239,48 +236,166 @@
             overflow: hidden;
         }
         
-        /* Animated Background */
+        /* ================================
+           STUNNING HERO BACKGROUND DESIGN
+           ================================ */
+        .hero {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* Main hero background with image */
         .hero-bg {
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            background: 
-                radial-gradient(ellipse at 20% 50%, rgba(245, 197, 24, 0.08) 0%, transparent 50%),
-                radial-gradient(ellipse at 80% 20%, rgba(74, 222, 128, 0.05) 0%, transparent 40%),
-                var(--bg-dark);
+            background: url('images/bac.jfif');
+            background-size: cover;
+            background-position: center center;
             z-index: 0;
+            transform: scale(1.1);
         }
         
-        /* Film strip decoration */
-        .hero-decoration {
-            position: absolute;
-            right: 5%;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 300px;
-            height: 400px;
-            opacity: 0.1;
-            z-index: 0;
-        }
-        
-        .hero-decoration::before {
+        /* Sophisticated dark overlay with gradient */
+        .hero-bg::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            border: 3px dashed var(--primary-gold);
-            border-radius: 10px;
-            animation: float 6s ease-in-out infinite;
+            background: 
+                linear-gradient(to bottom, 
+                    rgba(5, 5, 10, 0.85) 0%,
+                    rgba(5, 5, 10, 0.75) 50%,
+                    rgba(5, 5, 10, 0.9) 100%),
+                linear-gradient(135deg, 
+                    rgba(245, 197, 24, 0.1) 0%, 
+                    transparent 40%),
+                linear-gradient(225deg, 
+                    rgba(74, 222, 128, 0.08) 0%, 
+                    transparent 40%);
+            z-index: 1;
+        }
+        
+        /* Animated light rays effect */
+        .hero-bg::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: 
+                conic-gradient(from 0deg at 50% 50%,
+                    transparent 0deg,
+                    rgba(245, 197, 24, 0.03) 60deg,
+                    transparent 120deg,
+                    transparent 180deg,
+                    rgba(74, 222, 128, 0.02) 240deg,
+                    transparent 300deg,
+                    transparent 360deg);
+            animation: rotateRays 30s linear infinite;
+            z-index: 2;
+            pointer-events: none;
+        }
+        
+        @keyframes rotateRays {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Floating orbs for depth */
+        .hero-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(60px);
+            z-index: 3;
+            pointer-events: none;
+        }
+        
+        .hero-orb-1 {
+            width: 400px;
+            height: 400px;
+            background: rgba(245, 197, 24, 0.12);
+            top: -100px;
+            right: 10%;
+            animation: orbFloat1 15s ease-in-out infinite;
+        }
+        
+        .hero-orb-2 {
+            width: 300px;
+            height: 300px;
+            background: rgba(74, 222, 128, 0.08);
+            bottom: -50px;
+            left: 5%;
+            animation: orbFloat2 12s ease-in-out infinite;
+        }
+        
+        .hero-orb-3 {
+            width: 200px;
+            height: 200px;
+            background: rgba(245, 197, 24, 0.08);
+            top: 40%;
+            left: 30%;
+            animation: orbFloat3 18s ease-in-out infinite;
+        }
+        
+        /* Force hide any remaining decoration elements */
+        .hero * [class*="decor"],
+        .hero * [class*="strip"],
+        .hero * [class*="dot"] {
+            display: none !important;
+            visibility: hidden !important;
+            opacity: 0 !important;
+        }
+        
+        @keyframes orbFloat1 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(-30px, 30px) scale(1.1); }
+            66% { transform: translate(20px, -20px) scale(0.95); }
+        }
+        
+        @keyframes orbFloat2 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(40px, -30px) scale(1.05); }
+        }
+        
+        @keyframes orbFloat3 {
+            0%, 100% { transform: translate(0, 0); opacity: 0.8; }
+            50% { transform: translate(-20px, 20px); opacity: 1; }
+        }
+        
+        /* Cinematic vignette effect */
+        .hero-vignette {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(ellipse at center, transparent 40%, rgba(5, 5, 10, 0.6) 100%);
+            z-index: 4;
+            pointer-events: none;
         }
         
         .hero-content {
             max-width: 750px;
             position: relative;
-            z-index: 1;
+            z-index: 10;
+        }
+        
+        /* Static hero content glow - no animation for performance */
+        .hero-content::before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            left: -50px;
+            right: -50px;
+            bottom: -50px;
+            background: radial-gradient(ellipse at center, rgba(245, 197, 24, 0.1) 0%, transparent 70%);
+            z-index: -1;
         }
         
         .hero-badge {
@@ -289,20 +404,37 @@
             gap: 10px;
             background: rgba(245, 197, 24, 0.15);
             border: 1px solid rgba(245, 197, 24, 0.3);
-            padding: 10px 20px;
+            padding: 12px 24px;
             border-radius: 50px;
             font-size: 14px;
             font-weight: 600;
             color: var(--primary-gold);
             margin-bottom: 25px;
+            box-shadow: 0 4px 30px rgba(245, 197, 24, 0.1);
+            /* Use transform for animation - GPU accelerated */
+            animation: badgeFloat 3s ease-in-out infinite;
+            will-change: transform;
+            transform: translateZ(0);
+        }
+        
+        @keyframes badgeFloat {
+            0%, 100% {
+                transform: translateY(0) translateZ(0);
+            }
+            50% {
+                transform: translateY(-5px) translateZ(0);
+            }
         }
         
         .hero-badge .pulse {
-            width: 8px;
-            height: 8px;
+            width: 10px;
+            height: 10px;
             background: var(--accent-green);
             border-radius: 50%;
             animation: pulse 2s ease-in-out infinite;
+            box-shadow: 0 0 10px var(--accent-green);
+            will-change: transform, box-shadow;
+            transform: translateZ(0);
         }
         
         .hero h1 {
@@ -311,6 +443,18 @@
             line-height: 1.05;
             margin-bottom: 20px;
             letter-spacing: -2px;
+            text-shadow: 0 0 60px rgba(245, 197, 24, 0.3);
+            animation: titleReveal 1s ease-out forwards;
+            opacity: 0;
+            transform: translateY(20px) translateZ(0);
+            will-change: opacity, transform;
+        }
+        
+        @keyframes titleReveal {
+            to {
+                opacity: 1;
+                transform: translateY(0) translateZ(0);
+            }
         }
         
         .hero h1 .highlight {
@@ -318,6 +462,12 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            position: relative;
+        }
+        
+        /* Remove blur filter for performance */
+        .hero h1 .highlight::after {
+            display: none;
         }
         
         .hero-subtitle {
@@ -326,48 +476,159 @@
             margin-bottom: 35px;
             max-width: 550px;
             line-height: 1.7;
+            animation: fadeInUp 1s ease-out 0.3s forwards;
+            opacity: 0;
+            transform: translateY(20px) translateZ(0);
+            will-change: opacity, transform;
         }
         
-        /* Countdown Timer */
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0) translateZ(0);
+            }
+        }
+        
+        /* ========================================
+         * PREMIUM COUNTDOWN TIMER
+         * ======================================== */
         .countdown-container {
             margin-bottom: 35px;
+            perspective: 1000px;
         }
         
         .countdown-label {
             font-size: 14px;
             color: var(--text-gray);
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             text-transform: uppercase;
-            letter-spacing: 2px;
+            letter-spacing: 3px;
+            font-weight: 500;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .countdown-label::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--primary-gold), transparent);
         }
         
         .countdown {
             display: flex;
-            gap: 20px;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
         }
         
         .countdown-item {
-            background: var(--bg-card);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 20px 25px;
-            border-radius: 15px;
+            background: linear-gradient(145deg, rgba(26, 26, 46, 0.9), rgba(22, 33, 62, 0.9));
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            padding: 24px 20px;
+            border-radius: 16px;
             text-align: center;
             min-width: 90px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 
+                0 4px 20px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.05);
+        }
+        
+        /* Decorative corner accents - African pattern */
+        .countdown-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 20px;
+            height: 20px;
+            border-top: 2px solid var(--primary-gold);
+            border-left: 2px solid var(--primary-gold);
+            opacity: 0.6;
+        }
+        
+        .countdown-item::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 20px;
+            height: 20px;
+            border-bottom: 2px solid var(--primary-gold);
+            border-right: 2px solid var(--primary-gold);
+            opacity: 0.6;
+        }
+        
+        .countdown-item:hover {
+            transform: translateY(-5px) scale(1.02);
+            border-color: var(--primary-gold);
+            box-shadow: 
+                0 10px 40px rgba(212, 175, 55, 0.2),
+                0 0 30px rgba(212, 175, 55, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
         }
         
         .countdown-value {
-            font-size: 36px;
+            font-size: 42px;
             font-weight: 800;
             color: var(--primary-gold);
             line-height: 1;
             display: block;
+            font-family: 'Courier New', monospace;
+            text-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
+            transition: all 0.3s ease;
+        }
+        
+        .countdown-item:hover .countdown-value {
+            text-shadow: 0 0 30px rgba(212, 175, 55, 0.8);
+            transform: scale(1.05);
         }
         
         .countdown-unit {
-            font-size: 12px;
-            color: var(--text-gray);
+            font-size: 11px;
+            color: #888;
             text-transform: uppercase;
-            margin-top: 5px;
+            margin-top: 8px;
+            letter-spacing: 2px;
+            font-weight: 500;
+        }
+        
+        /* Pulse animation for countdown */
+        @keyframes countdownPulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+        
+        .countdown-value.animate {
+            animation: countdownPulse 1s ease-in-out;
+        }
+        
+        /* Mobile countdown */
+        @media (max-width: 480px) {
+            .countdown {
+                gap: 10px;
+            }
+            
+            .countdown-item {
+                padding: 16px 14px;
+                min-width: 70px;
+                border-radius: 12px;
+            }
+            
+            .countdown-value {
+                font-size: 28px;
+            }
+            
+            .countdown-unit {
+                font-size: 9px;
+            }
         }
         
         /* ========================================
@@ -484,31 +745,196 @@
             color: var(--text-gray-dark);
         }
         
+        /* ========================================
+         * PREMIUM AFRICAN CINEMA BUTTON STYLES
+         * ======================================== */
         .submit-btn {
-            padding: 18px 35px;
-            background: var(--gradient-gold);
+            padding: 20px 40px;
+            background: linear-gradient(135deg, #d4af37 0%, #f4cf57 50%, #d4af37 100%);
+            background-size: 200% 200%;
             border: none;
-            border-radius: 12px;
+            border-radius: 50px;
             font-size: 16px;
             font-weight: 700;
-            color: var(--bg-dark);
+            color: #0a0a0f;
             cursor: pointer;
-            transition: var(--transition);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             white-space: nowrap;
             display: flex;
             align-items: center;
-            gap: 10px;
+            justify-content: center;
+            gap: 12px;
+            position: relative;
+            overflow: hidden;
+            animation: fadeInUp 1s ease-out 0.5s forwards;
+            opacity: 0;
+            transform: translateY(20px) translateZ(0);
+            will-change: opacity, transform, background-position;
+            box-shadow: 
+                0 4px 15px rgba(212, 175, 55, 0.3),
+                0 0 30px rgba(212, 175, 55, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+        
+        /* African-inspired decorative corners */
+        .submit-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg, 
+                transparent, 
+                rgba(255,255,255,0.4), 
+                transparent
+            );
+            transition: left 0.6s ease;
+        }
+        
+        /* Shimmer effect */
+        .submit-btn::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(
+                circle,
+                rgba(255, 255, 255, 0.1) 0%,
+                transparent 70%
+            );
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
         
         .submit-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: var(--shadow-gold);
+            transform: translateY(-4px) scale(1.02) translateZ(0);
+            background-position: 100% 100%;
+            box-shadow: 
+                0 15px 50px rgba(212, 175, 55, 0.5),
+                0 0 60px rgba(212, 175, 55, 0.2),
+                0 0 100px rgba(244, 207, 87, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.4);
         }
         
+        .submit-btn:hover::before {
+            left: 100%;
+        }
+        
+        .submit-btn:hover::after {
+            opacity: 1;
+        }
+        
+        /* Active/pressed state */
+        .submit-btn:active {
+            transform: translateY(-1px) scale(0.98) translateZ(0);
+            box-shadow: 
+                0 5px 20px rgba(212, 175, 55, 0.4),
+                inset 0 2px 0 rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Disabled state */
         .submit-btn:disabled {
-            opacity: 0.7;
+            opacity: 0.6;
             cursor: not-allowed;
             transform: none;
+            box-shadow: none;
+            background: #555;
+        }
+        
+        /* Loading state */
+        .submit-btn.loading {
+            pointer-events: none;
+            animation: pulse 1.5s infinite;
+        }
+        
+        .submit-btn.loading .btn-text {
+            opacity: 0.7;
+        }
+        
+        .submit-btn.loading .btn-icon {
+            display: none;
+        }
+        
+        /* Success state */
+        .submit-btn.success {
+            background: linear-gradient(135deg, #10b981 0%, #34d399 50%, #10b981 100%);
+            background-size: 200% 200%;
+            animation: successPulse 0.6s ease-out;
+        }
+        
+        .submit-btn.success .btn-text {
+            color: white;
+        }
+        
+        .submit-btn.success .btn-icon {
+            color: white;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        
+        @keyframes successPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        /* Button icon animations */
+        .submit-btn .btn-icon {
+            transition: transform 0.3s ease;
+        }
+        
+        .submit-btn:hover .btn-icon {
+            transform: translateX(4px);
+        }
+        
+        /* Arrow animation on hover */
+        .submit-btn .btn-icon::before {
+            content: '\f054';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+        }
+        
+        /* Mobile responsive */
+        @media (max-width: 480px) {
+            .submit-btn {
+                padding: 16px 28px;
+                font-size: 14px;
+                border-radius: 40px;
+            }
+        }
+        
+        /* Focus state for accessibility */
+        .submit-btn:focus {
+            outline: none;
+            box-shadow: 
+                0 0 0 3px rgba(212, 175, 55, 0.5),
+                0 4px 15px rgba(212, 175, 55, 0.3);
+        }
+        
+        /* Micro-interaction: ripple effect */
+        .submit-btn .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.4);
+            transform: scale(0);
+            animation: ripple 0.6s linear;
+            pointer-events: none;
+        }
+        
+        @keyframes ripple {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
         }
         
         .form-note {
@@ -517,6 +943,374 @@
             display: flex;
             align-items: center;
             gap: 8px;
+        }
+        
+        /* Referral System Styles */
+        .referral-input {
+            margin-top: 12px;
+            background: rgba(255, 255, 255, 0.95) !important;
+            border: 1px solid #d4af37 !important;
+        }
+        
+        /* ========================================
+         * ENHANCED REFERRAL SYSTEM STYLES
+         * ======================================== */
+        .referral-display {
+            margin-top: 24px;
+            padding: 24px;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border-radius: 16px;
+            border: 2px solid #d4af37;
+            text-align: center;
+            animation: slideDown 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .referral-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+        
+        .referral-emoji {
+            font-size: 28px;
+            animation: bounce 1s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+        
+        .referral-header p {
+            color: #4ade80;
+            font-size: 20px;
+            font-weight: 600;
+            margin: 0;
+        }
+        
+        .referral-label {
+            color: #aaa;
+            font-size: 14px;
+            margin-bottom: 8px !important;
+        }
+        
+        .ref-code-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin: 12px 0;
+        }
+        
+        .ref-code {
+            display: inline-block;
+            font-size: 28px;
+            font-weight: 700;
+            color: #d4af37;
+            letter-spacing: 4px;
+            padding: 12px 20px;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .ref-code:hover {
+            border-color: #d4af37;
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.2);
+        }
+        
+        .copy-btn {
+            background: #d4af37;
+            color: #1a1a2e;
+            border: none;
+            border-radius: 8px;
+            width: 44px;
+            height: 44px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .copy-btn:hover {
+            background: #f4cf57;
+            transform: scale(1.05);
+        }
+        
+        .copy-btn:active {
+            transform: scale(0.95);
+        }
+        
+        .copy-feedback {
+            color: #4ade80;
+            font-size: 13px;
+            min-height: 20px;
+            margin: 8px 0 !important;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .copy-feedback.show {
+            opacity: 1;
+        }
+        
+        .referral-hint {
+            color: #888;
+            font-size: 13px;
+            margin-top: 8px !important;
+        }
+        
+        /* Referral Stats */
+        .referral-stats {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 20px 0;
+            padding: 16px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+        }
+        
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .stat-value {
+            font-size: 28px;
+            font-weight: 700;
+            color: #d4af37;
+        }
+        
+        .stat-label {
+            font-size: 12px;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        /* Share Section */
+        .share-section {
+            margin: 20px 0;
+        }
+        
+        .share-label {
+            color: #aaa;
+            font-size: 13px;
+            margin-bottom: 12px !important;
+        }
+        
+        .share-buttons {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .share-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            text-decoration: none;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s ease;
+        }
+        
+        .primary-share {
+            background: linear-gradient(135deg, #d4af37, #f4cf57);
+            color: #1a1a2e;
+        }
+        
+        .primary-share:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(212, 175, 55, 0.3);
+        }
+        
+        .whatsapp {
+            background: #25D366;
+            color: white;
+        }
+        
+        .whatsapp:hover {
+            background: #20BD5A;
+            transform: translateY(-2px);
+        }
+        
+        /* Bonus Countdown */
+        .bonus-countdown {
+            margin: 20px 0;
+            padding: 16px;
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 12px;
+        }
+        
+        .countdown-label {
+            color: #aaa;
+            font-size: 12px;
+            margin-bottom: 12px !important;
+        }
+        
+        .countdown-timer {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .countdown-unit {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 8px 12px;
+            border-radius: 8px;
+            min-width: 50px;
+        }
+        
+        .countdown-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: #d4af37;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .countdown-name {
+            font-size: 10px;
+            color: #888;
+            text-transform: uppercase;
+        }
+        
+        .countdown-sep {
+            font-size: 24px;
+            color: #d4af37;
+            font-weight: bold;
+        }
+        
+        /* Resend Button */
+        .resend-btn {
+            background: transparent;
+            border: 1px solid #555;
+            color: #888;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-top: 16px;
+        }
+        
+        .resend-btn:hover {
+            border-color: #d4af37;
+            color: #d4af37;
+        }
+        
+        /* Loading Spinner */
+        .btn-loader {
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(0, 0, 0, 0.2);
+            border-top-color: #1a1a2e;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Mobile Responsive */
+        @media (max-width: 480px) {
+            .referral-display {
+                padding: 16px;
+                margin: 16px 8px;
+            }
+            
+            .ref-code {
+                font-size: 20px;
+                padding: 10px 16px;
+                letter-spacing: 2px;
+            }
+            
+            .ref-code-wrapper {
+                flex-direction: column;
+                gap: 8px;
+            }
+            
+            .referral-stats {
+                gap: 20px;
+            }
+            
+            .stat-value {
+                font-size: 22px;
+            }
+            
+            .share-buttons {
+                flex-direction: column;
+            }
+            
+            .share-btn {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .countdown-timer {
+                gap: 4px;
+            }
+            
+            .countdown-unit {
+                min-width: 40px;
+                padding: 6px 8px;
+            }
+            
+            .countdown-value {
+                font-size: 18px;
+            }
+        }
+        
+        /* Accessibility */
+        .visually-hidden {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+        
+        /* Focus styles for accessibility */
+        .share-btn:focus,
+        .copy-btn:focus,
+        .resend-btn:focus {
+            outline: 2px solid #d4af37;
+            outline-offset: 2px;
         }
         
         /* Trust Signals */
@@ -1044,9 +1838,6 @@
            RESPONSIVE DESIGN
            ======================================== */
         @media (max-width: 1024px) {
-            .hero-decoration {
-                display: none;
-            }
         }
         
         @media (max-width: 768px) {
@@ -1182,7 +1973,12 @@
     <!-- Hero Section -->
     <section class="hero" id="waitlist">
         <div class="hero-bg"></div>
-        <div class="hero-decoration"></div>
+        <!-- Floating Orbs -->
+        <div class="hero-orb hero-orb-1"></div>
+        <div class="hero-orb hero-orb-2"></div>
+        <div class="hero-orb hero-orb-3"></div>
+        <!-- Vignette Effect -->
+        <div class="hero-vignette"></div>
         
         <div class="hero-content">
             <div class="hero-badge animate-fade-in">
@@ -1239,18 +2035,101 @@
             </div>
             
             <!-- Email Capture Form -->
-            <form class="email-form animate-fade-in delay-5" onsubmit="submitToWaitlist(event)">
+            <form class="email-form animate-fade-in delay-5" 
+                  id="waitlistForm"
+                  onsubmit="handleWaitlistSubmit(event)"
+                  aria-label="Join the Novara waitlist">
                 <input type="email" 
-                       id="emailInput" 
+                       id="waitlistEmail" 
                        class="email-input" 
                        placeholder="Enter your email address" 
                        required
-                       autocomplete="email">
-                <button type="submit" id="submitBtn" class="submit-btn">
-                    <span>Join Waitlist</span>
-                    <i class="fas fa-arrow-right"></i>
+                       autocomplete="email"
+                       aria-label="Email address"
+                       aria-describedby="emailHint">
+                <span id="emailHint" class="visually-hidden">We'll send a confirmation to this email</span>
+                <input type="text" 
+                       id="referralInput" 
+                       class="email-input referral-input" 
+                       placeholder="Friend's referral code (optional)"
+                       aria-label="Friend's referral code (optional)"
+                       pattern="NOV-[A-Z0-9]{5}"
+                       title="Format: NOV-XXXXX">
+                <button type="submit" id="joinWaitlistBtn" class="submit-btn" aria-label="Join the waitlist">
+                    <span class="btn-text">Join Waitlist</span>
+                    <span class="btn-loader" style="display: none;"></span>
+                    <i class="fas fa-arrow-right btn-icon"></i>
                 </button>
             </form>
+            <p id="message" role="status" aria-live="polite"></p>
+            
+            <!-- Referral Dashboard (shown after joining) -->
+            <div id="referralDisplay" class="referral-display" style="display: none;" aria-hidden="true">
+                <div class="referral-header">
+                    <span class="referral-emoji">🎉</span>
+                    <p>You're on the list!</p>
+                </div>
+                <p class="referral-label">Your unique referral code:</p>
+                <div class="ref-code-wrapper">
+                    <span id="displayRefCode" class="ref-code" role="textbox" aria-readonly="true"></span>
+                    <button id="copyCodeBtn" class="copy-btn" aria-label="Copy referral code" title="Copy code">
+                        <i class="fas fa-copy"></i>
+                    </button>
+                </div>
+                <p id="copyFeedback" class="copy-feedback" aria-live="polite"></p>
+                <p class="referral-hint">Share this with friends - they get 1 month free, you get 1 month free!</p>
+                
+                <!-- Referral Stats -->
+                <div class="referral-stats" id="referralStats">
+                    <div class="stat-item">
+                        <span class="stat-value" id="friendCount">0</span>
+                        <span class="stat-label">Friends Joined</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value" id="copyCount">0</span>
+                        <span class="stat-label">Times Copied</span>
+                    </div>
+                </div>
+                
+                <!-- Share Buttons -->
+                <div class="share-section">
+                    <p class="share-label">Share with friends:</p>
+                    <div class="share-buttons">
+                        <button id="shareBtn" class="share-btn primary-share" aria-label="Share referral code">
+                            <i class="fas fa-share-alt"></i> Share
+                        </button>
+                        <a id="whatsappShare" class="share-btn whatsapp" href="#" aria-label="Share on WhatsApp" target="_blank" rel="noopener noreferrer">
+                            <i class="fab fa-whatsapp"></i> WhatsApp
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Bonus Countdown -->
+                <div class="bonus-countdown" id="bonusCountdown">
+                    <p class="countdown-label">Your referral bonus activates in:</p>
+                    <div class="countdown-timer">
+                        <span class="countdown-unit">
+                            <span class="countdown-value" id="bonusDays">00</span>
+                            <span class="countdown-name">Days</span>
+                        </span>
+                        <span class="countdown-sep">:</span>
+                        <span class="countdown-unit">
+                            <span class="countdown-value" id="bonusHours">00</span>
+                            <span class="countdown-name">Hours</span>
+                        </span>
+                        <span class="countdown-sep">:</span>
+                        <span class="countdown-unit">
+                            <span class="countdown-value" id="bonusMins">00</span>
+                            <span class="countdown-name">Mins</span>
+                        </span>
+                    </div>
+                </div>
+                
+                <!-- Resend Email -->
+                <button id="resendEmailBtn" class="resend-btn" aria-label="Resend confirmation email">
+                    <i class="fas fa-envelope"></i> Resend confirmation email
+                </button>
+            </div>
             
             <p class="form-note animate-fade-in delay-5">
                 <i class="fas fa-lock"></i> Your data is secure. No spam, ever.
@@ -1624,30 +2503,620 @@
         </div>
     </div>
 
-    <!-- Firebase & Scripts -->
+    <!-- Firebase & Scripts (Realtime Database) -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
     <script>
         // ========================================
         // FIREBASE CONFIGURATION
         // ========================================
         const firebaseConfig = {
-            apiKey: "YOUR_API_KEY",
-            authDomain: "your-project.firebaseapp.com",
-            projectId: "your-project",
-            storageBucket: "your-project.appspot.com",
-            messagingSenderId: "123456789",
-            appId: "1:123456789:web:abcdef123456"
+            apiKey: "AIzaSyBJJtxzjBnD3bDC7kHqidagrR3x6KrsKGo",
+            authDomain: "novara-official.firebaseapp.com",
+            databaseURL: "https://novara-official-default-rtdb.firebaseio.com",
+            projectId: "novara-official",
+            storageBucket: "novara-official.firebasestorage.app",
+            messagingSenderId: "487327386416",
+            appId: "1:487327386416:web:c1d0637fab1105c94816f5",
+            measurementId: "G-YP15D9F3JG"
         };
         
-        let db = null;
+        let app = null;
         
+        // Initialize Firebase
         try {
-            if (firebaseConfig.apiKey !== "YOUR_API_KEY") {
-                firebase.initializeApp(firebaseConfig);
-                db = firebase.firestore();
-            }
+            app = firebase.initializeApp(firebaseConfig);
+            console.log('Firebase initialized successfully');
         } catch(e) {
-            console.log('Firebase demo mode');
+            console.error('Firebase initialization error:', e);
         }
+        
+        // --- EMAILJS CONFIGURATION ---
+        // Replace these with your actual EmailJS keys
+        const EMAILJS_PUBLIC_KEY = 'maNf661c-wmAa7RCg';
+        const EMAILJS_SERVICE_ID = 'service_jfusocq';
+        const EMAILJS_TEMPLATE_ID = 'YOUR_TEMPLATE_ID';
+        
+        // Initialize EmailJS
+        (function() {
+            try {
+                emailjs.init(EMAILJS_PUBLIC_KEY);
+                console.log('EmailJS initialized');
+            } catch(e) {
+                console.log('EmailJS not configured:', e);
+            }
+        })();
+        
+        // ========================================
+        // ENHANCED REFERRAL SYSTEM
+        // Features: validation, localStorage, share, tracking
+        // ========================================
+        
+        // --- CONSTANTS & REGEX PATTERNS ---
+        const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const REFERRAL_CODE_REGEX = /^(NOVT|NOV-[A-Z0-9]{0,5})$/i;
+        const STORAGE_KEY = 'novara_waitlist_user';
+        const BONUS_ACTIVATION_DAYS = 30; // Days until referral bonus activates
+        
+        // --- STATE MANAGEMENT ---
+        let isSubmitting = false;
+        let debounceTimer = null;
+        
+        // --- UTILITY FUNCTIONS ---
+        
+        /**
+         * Generate a unique referral code in format NOV-XXXXX
+         */
+        function generateReferralCode() {
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+            let code = 'NOV-';
+            for (let i = 0; i < 5; i++) {
+                code += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            return code;
+        }
+        
+        /**
+         * Validate email format
+         */
+        function validateEmail(email) {
+            return EMAIL_REGEX.test(email);
+        }
+        
+        /**
+         * Validate referral code format
+         */
+        function validateReferralCode(code) {
+            if (!code || code.trim() === '') return true; // Optional field
+            return REFERRAL_CODE_REGEX.test(code.trim().toUpperCase());
+        }
+        
+        /**
+         * Show error message to user
+         */
+        function showError(message) {
+            const messageEl = document.getElementById('message');
+            if (messageEl) {
+                messageEl.textContent = message;
+                messageEl.style.color = '#ef4444';
+                messageEl.setAttribute('role', 'alert');
+            }
+        }
+        
+        /**
+         * Show success message to user
+         */
+        function showSuccess(message) {
+            const messageEl = document.getElementById('message');
+            if (messageEl) {
+                messageEl.textContent = message;
+                messageEl.style.color = '#4ade80';
+            }
+        }
+        
+        /**
+         * Set loading state on button with animations
+         */
+        function setLoadingState(loading) {
+            const btn = document.getElementById('joinWaitlistBtn');
+            const btnText = btn?.querySelector('.btn-text');
+            const btnLoader = btn?.querySelector('.btn-loader');
+            const btnIcon = btn?.querySelector('.btn-icon');
+            
+            if (!btn) return;
+            
+            // Remove previous states
+            btn.classList.remove('loading', 'success');
+            
+            if (loading) {
+                btn.disabled = true;
+                btn.classList.add('loading');
+                if (btnText) btnText.textContent = 'Joining...';
+                if (btnLoader) btnLoader.style.display = 'inline-block';
+                if (btnIcon) btnIcon.style.display = 'none';
+            } else {
+                btn.disabled = false;
+                if (btnText) btnText.textContent = 'Join Waitlist';
+                if (btnLoader) btnLoader.style.display = 'none';
+                if (btnIcon) btnIcon.style.display = 'inline-block';
+            }
+        }
+        
+        /**
+         * Set success state on button with animation
+         */
+        function setSuccessState() {
+            const btn = document.getElementById('joinWaitlistBtn');
+            const btnText = btn?.querySelector('.btn-text');
+            const btnLoader = btn?.querySelector('.btn-loader');
+            const btnIcon = btn?.querySelector('.btn-icon');
+            
+            if (!btn) return;
+            
+            btn.classList.remove('loading');
+            btn.classList.add('success');
+            btn.disabled = true;
+            
+            if (btnText) btnText.textContent = 'You\'re In!';
+            if (btnLoader) btnLoader.style.display = 'none';
+            if (btnIcon) {
+                btnIcon.style.display = 'inline-block';
+                btnIcon.className = 'fas fa-check btn-icon';
+            }
+        }
+        
+        /**
+         * Create ripple effect on button click
+         */
+        function createRipple(event) {
+            const btn = event.currentTarget;
+            const rect = btn.getBoundingClientRect();
+            const x = event.clientX - rect.left;
+            const y = event.clientY - rect.top;
+            
+            const ripple = document.createElement('span');
+            ripple.classList.add('ripple');
+            ripple.style.left = x + 'px';
+            ripple.style.top = y + 'px';
+            
+            btn.appendChild(ripple);
+            
+            setTimeout(() => ripple.remove(), 600);
+        }
+        
+        // --- LOCAL STORAGE MANAGEMENT ---
+        
+        /**
+         * Save user data to localStorage
+         */
+        function saveUserData(data) {
+            try {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+            } catch (e) {
+                console.warn('localStorage not available:', e);
+            }
+        }
+        
+        /**
+         * Load user data from localStorage
+         */
+        function loadUserData() {
+            try {
+                const data = localStorage.getItem(STORAGE_KEY);
+                return data ? JSON.parse(data) : null;
+            } catch (e) {
+                console.warn('localStorage not available:', e);
+                return null;
+            }
+        }
+        
+        /**
+         * Update user referral stats
+         */
+        function updateUserStats(updates) {
+            const userData = loadUserData();
+            if (userData) {
+                userData = { ...userData, ...updates };
+                saveUserData(userData);
+                updateStatsDisplay(userData);
+            }
+        }
+        
+        /**
+         * Update stats display on page
+         */
+        function updateStatsDisplay(userData) {
+            const friendCountEl = document.getElementById('friendCount');
+            const copyCountEl = document.getElementById('copyCount');
+            
+            if (friendCountEl) friendCountEl.textContent = userData?.friendCount || 0;
+            if (copyCountEl) copyCountEl.textContent = userData?.copyCount || 0;
+        }
+        
+        // --- FIREBASE OPERATIONS ---
+        
+        /**
+         * Validate referral code against Firebase
+         */
+        async function validateReferralCodeInDB(code) {
+            if (!code || code.trim() === '' || code.toUpperCase() === 'NONE') {
+                return { valid: true, referrerId: null };
+            }
+            
+            try {
+                const snapshot = await firebase.database()
+                    .ref('waitlist')
+                    .orderByChild('myReferralCode')
+                    .equalTo(code.toUpperCase())
+                    .limitToFirst(1)
+                    .once('value');
+                
+                const data = snapshot.val();
+                if (data) {
+                    const key = Object.keys(data)[0];
+                    return { valid: true, referrerId: key };
+                }
+                return { valid: false, error: 'Referral code not found. Please check and try again.' };
+            } catch (e) {
+                console.error('Error validating referral code:', e);
+                return { valid: true }; // Allow if validation fails
+            }
+        }
+        
+        /**
+         * Save user to Firebase with referral info
+         */
+        async function saveToFirebase(email, myCode, referredBy) {
+            const userData = {
+                email: email,
+                myReferralCode: myCode,
+                referredBy: referredBy || 'NONE',
+                timestamp: firebase.database.ServerValue.TIMESTAMP,
+                copyCount: 0,
+                friendCount: 0
+            };
+            
+            const snapshot = await firebase.database().ref('waitlist').push(userData);
+            return snapshot.key;
+        }
+        
+        /**
+         * Resend confirmation email
+         */
+        async function resendConfirmationEmail(email, code) {
+            if (EMAILJS_PUBLIC_KEY !== 'YOUR_PUBLIC_KEY') {
+                return emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+                    email: email,
+                    referral_code: code,
+                    message: 'Your Novara confirmation email. Your referral code: ' + code
+                });
+            }
+            throw new Error('EmailJS not configured');
+        }
+        
+        // --- COPY & SHARE FUNCTIONALITY ---
+        
+        /**
+         * Copy referral code to clipboard
+         */
+        async function copyReferralCode() {
+            const codeEl = document.getElementById('displayRefCode');
+            const feedbackEl = document.getElementById('copyFeedback');
+            const code = codeEl?.textContent;
+            
+            if (!code) return;
+            
+            try {
+                await navigator.clipboard.writeText(code);
+                
+                // Show feedback
+                if (feedbackEl) {
+                    feedbackEl.textContent = '✓ Code copied to clipboard!';
+                    feedbackEl.classList.add('show');
+                    setTimeout(() => feedbackEl.classList.remove('show'), 2000);
+                }
+                
+                // Update copy count
+                const userData = loadUserData();
+                if (userData) {
+                    updateUserStats({ copyCount: (userData.copyCount || 0) + 1 });
+                }
+                
+            } catch (e) {
+                // Fallback for older browsers
+                const textArea = document.createElement('textarea');
+                textArea.value = code;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                
+                if (feedbackEl) {
+                    feedbackEl.textContent = '✓ Code copied!';
+                    feedbackEl.classList.add('show');
+                    setTimeout(() => feedbackEl.classList.remove('show'), 2000);
+                }
+            }
+        }
+        
+        /**
+         * Share using Web Share API or fallback
+         */
+        async function shareReferralCode() {
+            const codeEl = document.getElementById('displayRefCode');
+            const code = codeEl?.textContent;
+            
+            if (!code) return;
+            
+            const shareText = `Join me on Novara - Uganda's #1 streaming platform! Use my referral code ${code} to get 1 month free when they launch. Sign up at https://novara.ug`;
+            
+            // Try Web Share API first
+            if (navigator.share) {
+                try {
+                    await navigator.share({
+                        title: 'Join Novara - Get 1 Month Free!',
+                        text: shareText,
+                        url: 'https://novara.ug'
+                    });
+                    return;
+                } catch (e) {
+                    if (e.name !== 'AbortError') {
+                        console.warn('Web Share failed:', e);
+                    }
+                }
+            }
+            
+            // Fallback: copy to clipboard
+            await navigator.clipboard.writeText(shareText);
+            const feedbackEl = document.getElementById('copyFeedback');
+            if (feedbackEl) {
+                feedbackEl.textContent = '✓ Share text copied to clipboard!';
+                feedbackEl.classList.add('show');
+                setTimeout(() => feedbackEl.classList.remove('show'), 3000);
+            }
+        }
+        
+        /**
+         * Update WhatsApp share link
+         */
+        function updateWhatsAppLink() {
+            const codeEl = document.getElementById('displayRefCode');
+            const whatsappEl = document.getElementById('whatsappShare');
+            const code = codeEl?.textContent;
+            
+            if (!code || !whatsappEl) return;
+            
+            const message = `Join me on Novara - Uganda's #1 streaming platform! Use my referral code ${code} to get 1 month free when they launch.`;
+            whatsappEl.href = `https://wa.me/?text=${encodeURIComponent(message)}`;
+        }
+        
+        // --- BONUS COUNTDOWN ---
+        
+        /**
+         * Update referral bonus countdown
+         */
+        function updateBonusCountdown() {
+            const userData = loadUserData();
+            if (!userData?.joinedAt) return;
+            
+            const joinedDate = new Date(userData.joinedAt);
+            const bonusDate = new Date(joinedDate.getTime() + (BONUS_ACTIVATION_DAYS * 24 * 60 * 60 * 1000));
+            const now = new Date();
+            const diff = bonusDate - now;
+            
+            if (diff <= 0) {
+                document.getElementById('bonusDays').textContent = '00';
+                document.getElementById('bonusHours').textContent = '00';
+                document.getElementById('bonusMins').textContent = '00';
+                return;
+            }
+            
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            
+            document.getElementById('bonusDays').textContent = String(days).padStart(2, '0');
+            document.getElementById('bonusHours').textContent = String(hours).padStart(2, '0');
+            document.getElementById('bonusMins').textContent = String(mins).padStart(2, '0');
+        }
+        
+        // --- REFERRAL DASHBOARD ---
+        
+        /**
+         * Show referral dashboard after successful signup
+         */
+        function showReferralDashboard(code) {
+            const referralDisplay = document.getElementById('referralDisplay');
+            const displayRefCode = document.getElementById('displayRefCode');
+            const emailForm = document.querySelector('.email-form');
+            
+            if (referralDisplay && displayRefCode) {
+                displayRefCode.textContent = code;
+                referralDisplay.style.display = 'block';
+                referralDisplay.setAttribute('aria-hidden', 'false');
+                
+                // Hide form after success
+                if (emailForm) {
+                    emailForm.style.display = 'none';
+                }
+                
+                // Update WhatsApp link
+                updateWhatsAppLink();
+                
+                // Start bonus countdown
+                updateBonusCountdown();
+                setInterval(updateBonusCountdown, 60000);
+            }
+        }
+        
+        /**
+         * Check if user already joined and show dashboard
+         */
+        function checkExistingUser() {
+            const userData = loadUserData();
+            if (userData?.myReferralCode) {
+                showReferralDashboard(userData.myReferralCode);
+                updateStatsDisplay(userData);
+            }
+        }
+        
+        // --- MAIN SUBMISSION HANDLER ---
+        
+        /**
+         * Handle waitlist form submission
+         */
+        async function handleWaitlistSubmit(event) {
+            event.preventDefault();
+            
+            // Prevent double submission
+            if (isSubmitting) return;
+            
+            const emailInput = document.getElementById('waitlistEmail');
+            const referralInput = document.getElementById('referralInput');
+            const email = emailInput?.value?.trim();
+            const referralCode = referralInput?.value?.trim().toUpperCase();
+            
+            // Validate email
+            if (!email || !validateEmail(email)) {
+                showError('Please enter a valid email address.');
+                return;
+            }
+            
+            // Validate referral code format
+            if (!validateReferralCode(referralCode)) {
+                showError('Invalid referral code format. Use format: NOV-XXXXX');
+                return;
+            }
+            
+            // Set loading state
+            isSubmitting = true;
+            setLoadingState(true);
+            
+            try {
+                // Validate referral code in Firebase if provided
+                if (referralCode && referralCode !== 'NONE') {
+                    const validation = await validateReferralCodeInDB(referralCode);
+                    if (!validation.valid) {
+                        showError(validation.error);
+                        setLoadingState(false);
+                        isSubmitting = false;
+                        return;
+                    }
+                }
+                
+                // Generate user's unique referral code
+                const myCode = generateReferralCode();
+                
+                // Save to Firebase
+                await saveToFirebase(email, myCode, referralCode);
+                
+                // Save to localStorage
+                const userData = {
+                    email: email,
+                    myReferralCode: myCode,
+                    referredBy: referralCode || 'NONE',
+                    joinedAt: Date.now(),
+                    copyCount: 0,
+                    friendCount: 0
+                };
+                saveUserData(userData);
+                
+                // Try to send confirmation email
+                try {
+                    await resendConfirmationEmail(email, myCode);
+                } catch (e) {
+                    console.log('Email sending skipped:', e.message);
+                }
+                
+                // Show success
+                showSuccess(`🎉 You're in! Your referral code: ${myCode}`);
+                setSuccessState();
+                
+                // Show referral dashboard
+                showReferralDashboard(myCode);
+                
+                // Clear form
+                emailInput.value = '';
+                if (referralInput) referralInput.value = '';
+                
+            } catch (error) {
+                console.error('Error joining waitlist:', error);
+                showError('Something went wrong. Please try again or contact hello@novara.ug');
+            } finally {
+                isSubmitting = false;
+                setLoadingState(false);
+            }
+        }
+        
+        // --- EVENT LISTENERS & INITIALIZATION ---
+        
+        // Expose main handler to window
+        window.handleWaitlistSubmit = handleWaitlistSubmit;
+        
+        // Add event listeners when DOM is ready
+        document.addEventListener('DOMContentLoaded', () => {
+            // Check for returning user
+            checkExistingUser();
+            
+            // Add ripple effect to submit button
+            const submitBtn = document.getElementById('joinWaitlistBtn');
+            if (submitBtn) {
+                submitBtn.addEventListener('click', createRipple);
+            }
+            
+            // Copy button
+            const copyBtn = document.getElementById('copyCodeBtn');
+            if (copyBtn) {
+                copyBtn.addEventListener('click', copyReferralCode);
+            }
+            
+            // Share button
+            const shareBtn = document.getElementById('shareBtn');
+            if (shareBtn) {
+                shareBtn.addEventListener('click', shareReferralCode);
+            }
+            
+            // Resend email button
+            const resendBtn = document.getElementById('resendEmailBtn');
+            if (resendBtn) {
+                resendBtn.addEventListener('click', async () => {
+                    const userData = loadUserData();
+                    if (userData?.email && userData?.myReferralCode) {
+                        resendBtn.disabled = true;
+                        resendBtn.textContent = 'Sending...';
+                        try {
+                            await resendConfirmationEmail(userData.email, userData.myReferralCode);
+                            resendBtn.textContent = '✓ Email sent!';
+                            setTimeout(() => {
+                                resendBtn.disabled = false;
+                                resendBtn.innerHTML = '<i class="fas fa-envelope"></i> Resend confirmation email';
+                            }, 2000);
+                        } catch (e) {
+                            resendBtn.textContent = 'Failed to send';
+                            setTimeout(() => {
+                                resendBtn.disabled = false;
+                                resendBtn.innerHTML = '<i class="fas fa-envelope"></i> Resend confirmation email';
+                            }, 2000);
+                        }
+                    }
+                });
+            }
+            
+            // Real-time referral code validation
+            const referralInputEl = document.getElementById('referralInput');
+            if (referralInputEl) {
+                referralInputEl.addEventListener('blur', async () => {
+                    const code = referralInputEl.value.trim().toUpperCase();
+                    if (code && code !== 'NONE') {
+                        const validation = await validateReferralCodeInDB(code);
+                        if (!validation.valid) {
+                            showError(validation.error);
+                            referralInputEl.value = '';
+                        }
+                    }
+                });
+            }
+        });
         
         // ========================================
         // COUNTDOWN TIMER
@@ -1698,51 +3167,9 @@
         // ========================================
         // WAITLIST SUBMISSION
         // ========================================
-        async function submitToWaitlist(event) {
-            event.preventDefault();
-            
-            const emailInput = document.getElementById('emailInput');
-            const submitBtn = document.getElementById('submitBtn');
-            const email = emailInput.value.trim();
-            
-            if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-                showToast('Please enter a valid email address', true);
-                return;
-            }
-            
-            submitBtn.disabled = true;
-            submitBtn.innerHTML = '<span class="spinner"></span> Joining...';
-            
-            try {
-                if (db) {
-                    await db.collection('waitlist').add({
-                        email: email,
-                        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-                        status: 'pending',
-                        source: new URLSearchParams(window.location.search).get('source') || 'organic',
-                        referralCode: 'NOV' + Math.random().toString(36).substr(2, 6).toUpperCase()
-                    });
-                } else {
-                    // Demo mode
-                    const waitlist = JSON.parse(localStorage.getItem('novara_waitlist') || '[]');
-                    waitlist.push({ email, timestamp: new Date().toISOString() });
-                    localStorage.setItem('novara_waitlist', JSON.stringify(waitlist));
-                }
-                
-                showToast('🎉 Welcome! Check your email for confirmation.');
-                emailInput.value = '';
-                
-                setTimeout(() => {
-                    window.location.href = 'thank-you.html';
-                }, 2000);
-                
-            } catch (error) {
-                showToast('Error! Please try again.', true);
-            } finally {
-                submitBtn.disabled = false;
-                submitBtn.innerHTML = '<span>Join Waitlist</span><i class="fas fa-arrow-right"></i>';
-            }
-        }
+        // Button Logic
+        const btn = document.getElementById('joinWaitlistBtn');
+        // Note: Main submission logic moved to handleWaitlistSubmit in enhanced referral system
         
         // ========================================
         // TOAST NOTIFICATION
