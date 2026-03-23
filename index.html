@@ -747,35 +747,37 @@
         
         /* ========================================
          * PREMIUM AFRICAN CINEMA BUTTON STYLES
+         * Matching nav-cta design with gold gradient
          * ======================================== */
         .submit-btn {
-            padding: 20px 40px;
+            padding: 14px 36px;
             background: linear-gradient(135deg, #d4af37 0%, #f4cf57 50%, #d4af37 100%);
             background-size: 200% 200%;
             border: none;
-            border-radius: 50px;
-            font-size: 16px;
-            font-weight: 700;
+            border-radius: 30px;
+            font-size: 15px;
+            font-weight: 600;
             color: #0a0a0f;
             cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: all 0.3s ease;
             white-space: nowrap;
-            display: flex;
+            display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 12px;
+            gap: 10px;
             position: relative;
             overflow: hidden;
             animation: fadeInUp 1s ease-out 0.5s forwards;
             opacity: 0;
-            transform: translateY(20px) translateZ(0);
+            transform: translateY(20px);
             will-change: opacity, transform, background-position;
             box-shadow: 
                 0 4px 15px rgba(212, 175, 55, 0.3),
                 0 0 30px rgba(212, 175, 55, 0.1),
                 inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            min-width: 180px;
+            flex-shrink: 0;
             letter-spacing: 0.5px;
-            text-transform: uppercase;
         }
         
         /* African-inspired decorative corners */
@@ -906,9 +908,11 @@
         /* Mobile responsive */
         @media (max-width: 480px) {
             .submit-btn {
-                padding: 16px 28px;
+                padding: 16px 32px;
                 font-size: 14px;
-                border-radius: 40px;
+                border-radius: 30px;
+                min-width: 160px;
+                width: 100%;
             }
         }
         
@@ -2535,7 +2539,7 @@
         // Replace these with your actual EmailJS keys
         const EMAILJS_PUBLIC_KEY = 'maNf661c-wmAa7RCg';
         const EMAILJS_SERVICE_ID = 'service_jfusocq';
-        const EMAILJS_TEMPLATE_ID = 'YOUR_TEMPLATE_ID';
+        const EMAILJS_TEMPLATE_ID = 'template_kyhdp7t';
         
         // Initialize EmailJS
         (function() {
@@ -2785,11 +2789,11 @@
          */
         async function resendConfirmationEmail(email, code) {
             if (EMAILJS_PUBLIC_KEY !== 'YOUR_PUBLIC_KEY') {
-                return emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
-                    email: email,
-                    referral_code: code,
-                    message: 'Your Novara confirmation email. Your referral code: ' + code
-                });
+                const templateParams = {
+                    user_email: email,
+                    my_code: code
+                };
+                return emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams);
             }
             throw new Error('EmailJS not configured');
         }
